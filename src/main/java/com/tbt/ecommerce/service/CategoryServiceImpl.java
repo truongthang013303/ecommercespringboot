@@ -39,4 +39,8 @@ public class CategoryServiceImpl implements CategoryService{
         if(pageable==null) pageable = PageRequest.of(0,1, Sort.by("id").descending());
         return categoryRepository.findAllByLevel(level, pageable);
     }
+    @Override
+    public Page<Category> findChirldrenCategory(Integer parentCategoryId, Pageable pageable){
+        return categoryRepository.findChirldrenCategory(parentCategoryId, pageable);
+    }
 }
