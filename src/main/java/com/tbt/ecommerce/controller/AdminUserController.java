@@ -20,4 +20,4 @@ public class AdminUserController {
         UserDTO updated = userService.updateUser(jwt, userDTO);
         return new ResponseEntity<>(updated, HttpStatus.OK);
     }
-}
+} 
