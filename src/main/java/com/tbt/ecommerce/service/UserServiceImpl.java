@@ -1,6 +1,8 @@
 package com.tbt.ecommerce.service;
 
 import com.tbt.ecommerce.config.JwtProvider;
+import com.tbt.ecommerce.converter.UserConverter;
+import com.tbt.ecommerce.dto.UserDTO;
 import com.tbt.ecommerce.exception.UserException;
 import com.tbt.ecommerce.model.User;
 import com.tbt.ecommerce.repository.UserRepository;
@@ -46,5 +48,24 @@ public class UserServiceImpl implements UserService{
         Pageable pageable = PageRequest.of(pageNumber, pageSize);
         Page<User> page = userRepository.findAll(pageable);
         return page;
+    }
+
+    @Override
+    public UserDTO updateUser(String jwt, UserDTO userDTO) {
+        Optional<User> userOtp= userRepository.findById(userDTO.getId());
+        User saved=null;
+        if(userOtp.isPresent()&&userOtp!=null){
+            User user = userOtp.get();
+            user.setFirstName(userDTO.getFirstName());
+//            user.setFirstName(userDTO.getFirstName()!=""?userDTO.getFirstName():user.getFirstName());
+            user.setLastName(userDTO.getLastName());
+            user.setEmail(userDTO.getEmail());
+            user.setMobile(user.getMobile());
+            saved = userRepository.save(user);
+        }
+        if(saved!=null){
+            return UserConverter.userEntityToUserDto(saved);
+        }
+        return null;
     }
 }

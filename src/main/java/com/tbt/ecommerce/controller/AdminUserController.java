@@ -16,7 +16,8 @@ public class AdminUserController {
     private UserService userService;
 
     @PutMapping
-    public ResponseEntity<UserDTO> getUserProfileHandler(@RequestHeader("Authorization") String jwt, @RequestBody UserDTO userDTO) throws UserException {
-        return new ResponseEntity<>(userDTO, HttpStatus.OK);
+    public ResponseEntity<UserDTO> updateUser(@RequestHeader("Authorization") String jwt, @RequestBody UserDTO userDTO) throws UserException {
+        UserDTO updated = userService.updateUser(jwt, userDTO);
+        return new ResponseEntity<>(updated, HttpStatus.OK);
     }
 }
