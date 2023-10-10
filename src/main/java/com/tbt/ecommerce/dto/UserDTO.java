@@ -23,5 +23,6 @@ public class UserDTO {
     private String email;
     private String role;
     private String mobile;
+    private String password;
     private LocalDateTime createdAt;
 }

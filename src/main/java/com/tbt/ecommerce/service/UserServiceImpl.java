@@ -60,7 +60,10 @@ public class UserServiceImpl implements UserService{
 //            user.setFirstName(userDTO.getFirstName()!=""?userDTO.getFirstName():user.getFirstName());
             user.setLastName(userDTO.getLastName());
             user.setEmail(userDTO.getEmail());
-            user.setMobile(user.getMobile());
+            user.setMobile(userDTO.getMobile());
+            if(user.getPassword()!="" && user.getPassword().length()>0 && !user.getPassword().startsWith("$2a$10$")){
+                user.setPassword(userDTO.getPassword());
+            }
             saved = userRepository.save(user);
         }
         if(saved!=null){
