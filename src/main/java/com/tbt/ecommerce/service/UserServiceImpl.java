@@ -52,7 +52,11 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public UserDTO updateUser(String jwt, UserDTO userDTO) {
-        Optional<User> userOtp= userRepository.findById(userDTO.getId());
+        Optional<User> userOtp = null;
+        if(userDTO!=null)
+        {
+            userOtp= userRepository.findById(userDTO.getId());
+        }
         User saved=null;
         if(userOtp.isPresent()&&userOtp!=null){
             User user = userOtp.get();
@@ -61,7 +65,7 @@ public class UserServiceImpl implements UserService{
             user.setLastName(userDTO.getLastName());
             user.setEmail(userDTO.getEmail());
             user.setMobile(userDTO.getMobile());
-            if(user.getPassword()!="" && user.getPassword().length()>0 && !user.getPassword().startsWith("$2a$10$")){
+            if(userDTO.getPassword()!="" && userDTO.getPassword().length()>0 && !userDTO.getPassword().startsWith("$2a$10$")){
                 user.setPassword(userDTO.getPassword());
             }
             saved = userRepository.save(user);
