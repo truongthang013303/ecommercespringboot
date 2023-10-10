@@ -3,10 +3,13 @@ package com.tbt.ecommerce.controller;
 import com.tbt.ecommerce.config.JwtProvider;
 import com.tbt.ecommerce.converter.UserConverter;
 import com.tbt.ecommerce.dto.UserDTO;
+import com.tbt.ecommerce.exception.CartException;
+import com.tbt.ecommerce.exception.OrderException;
 import com.tbt.ecommerce.exception.UserException;
 import com.tbt.ecommerce.model.Cart;
 import com.tbt.ecommerce.model.User;
 import com.tbt.ecommerce.repository.UserRepository;
+import com.tbt.ecommerce.response.ApiResponse;
 import com.tbt.ecommerce.response.AuthResponse;
 import com.tbt.ecommerce.service.CartService;
 import com.tbt.ecommerce.service.UserService;
@@ -71,5 +74,13 @@ public class AdminUserController {
         authResponse.setJwt(token);
         authResponse.setMessage("Signup Success");*/
         return new ResponseEntity<>(UserConverter.userEntityToUserDto(savedUser), HttpStatus.CREATED);
+    }
+    @DeleteMapping("/{userId}/delete")
+    public ResponseEntity<ApiResponse> deleteUserHandler(@PathVariable Long userId, @RequestHeader("Authorization")String jwt) throws UserException, CartException {
+        userService.deleteUser(userId);
+        ApiResponse res= new ApiResponse();
+        res.setMessage("user deleted successfully");
+        res.setStatus(true);
+        return new ResponseEntity<>(res, HttpStatus.OK);
     }
 }

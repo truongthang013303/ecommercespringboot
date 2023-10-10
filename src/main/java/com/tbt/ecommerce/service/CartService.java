@@ -1,5 +1,6 @@
 package com.tbt.ecommerce.service;
 
+import com.tbt.ecommerce.exception.CartException;
 import com.tbt.ecommerce.exception.CartItemException;
 import com.tbt.ecommerce.exception.ProductException;
 import com.tbt.ecommerce.exception.UserException;
@@ -16,4 +17,7 @@ public interface CartService {
 
     public Cart findUserCart(Long userId) throws UserException;
 
+    Cart findCartByUserId(Long userId) throws CartException;
+
+    void deleteCart(Cart cart) throws CartException;
 }

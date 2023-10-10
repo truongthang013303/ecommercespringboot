@@ -1,5 +1,6 @@
 package com.tbt.ecommerce.service;
 
+import com.tbt.ecommerce.exception.CartException;
 import com.tbt.ecommerce.exception.CartItemException;
 import com.tbt.ecommerce.exception.ProductException;
 import com.tbt.ecommerce.exception.UserException;
@@ -11,8 +12,6 @@ import com.tbt.ecommerce.repository.CartRepository;
 import com.tbt.ecommerce.request.AddItemRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.HashSet;
 
 @Service
 public class CartServiceImpl implements CartService {
@@ -83,5 +82,19 @@ public class CartServiceImpl implements CartService {
             cart.setDiscounte(totalPrice-totalDiscountedPrice);
         }
         return cartRepository.save(cart);
+    }
+    @Override
+    public Cart findCartByUserId(Long userId) throws CartException {
+        Cart cart = cartRepository.findByUserId(userId);
+        return cart;
+    }
+
+    @Override
+    public void deleteCart(Cart cart) throws CartException{
+        Boolean cartRemoveExist = cartRepository.existsById(cart.getId());
+        if(cartRemoveExist==false){
+            throw new CartException("Cart with id:"+cart.getId()+"not found");
+        }
+        cartRepository.delete(cart);
     }
 }
