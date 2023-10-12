@@ -16,6 +16,8 @@ public interface CategoryService {
 
     Page<Category> getAllCatgegoriesPagi(String sort, Integer pageNumber, Integer pageSize);
 
+    Page<Category> filterCategory(String sort, Integer pageNumber, Integer pageSize, Integer parentCategoryId, Integer level);
+
     public Page<Category> findAllByLevel(Integer level, Pageable pageable);
 
     Page<Category> findChirldrenCategory(Integer parentCategoryId, Pageable pageable);

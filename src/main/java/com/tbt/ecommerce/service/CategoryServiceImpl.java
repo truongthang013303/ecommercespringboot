@@ -32,6 +32,14 @@ public class CategoryServiceImpl implements CategoryService{
         Page<Category> page = categoryRepository.findAll(pageable);
         return page;
     }
+    @Override
+    public Page<Category> filterCategory(String sort, Integer pageNumber, Integer pageSize, Integer parentCategoryId, Integer level) {
+        if(pageNumber<0) pageNumber=0;
+        if(pageSize<1) pageSize=1;
+        Pageable pageable = PageRequest.of(pageNumber, pageSize);
+        Page<Category> page = categoryRepository.filterCategory(parentCategoryId, level, pageable);
+        return page;
+    }
 
     @Override
     public Page<Category> findAllByLevel(Integer level, Pageable pageable) {

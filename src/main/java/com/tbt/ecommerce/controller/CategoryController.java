@@ -26,22 +26,15 @@ public class CategoryController {
         return new ResponseEntity<>(categories, HttpStatus.ACCEPTED);
     }
     @GetMapping
-    public ResponseEntity<Page<Category>> getAllCatgegoriesPagi(
+    public ResponseEntity<Page<Category>> findAllByLevelHandle(
             @RequestParam(required = false) String sort,
-            @RequestParam Integer pageNumber,
-            @RequestParam Integer pageSize,
-            @RequestParam(required = false) Integer level
+            @RequestParam(defaultValue = "0")  Integer pageNumber,
+            @RequestParam(defaultValue = "1")  Integer pageSize,
+            @RequestParam(defaultValue = "3") Integer level,
+            @RequestParam(required = false) Integer parentCategoryId
     )
     {
-/*        if(level!=null && level!=0){
-            categoryService.findAllByLevel(level, PageRequest.of(pageNumber, pageSize));
-        }*/
-        Page<Category> res = categoryService.getAllCatgegoriesPagi(
-                sort,
-                pageNumber,
-                pageSize
-        );
-
+        Page<Category> res = categoryService.filterCategory(sort, pageNumber, pageSize, parentCategoryId, level);
         return new ResponseEntity<>(res, HttpStatus.ACCEPTED);
     }
     @GetMapping("/{parentCategoryName}/{name}")

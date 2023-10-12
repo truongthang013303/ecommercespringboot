@@ -16,4 +16,7 @@ public interface CategoryRepository extends JpaRepository<Category, Long> {
     public Page<Category> findAllByLevel(Integer level, Pageable pageable);
     @Query("SELECT c FROM Category c WHERE c.parentCategory.id=:parentCategoryId")
     public Page<Category> findChirldrenCategory(@Param("parentCategoryId")Integer parentCategoryId, Pageable pageable);
+
+    @Query("SELECT c FROM Category c WHERE (c.parentCategory.id=:parentCategoryId OR :parentCategoryId IS NULL) AND (c.level=:level OR :level IS NULL)")
+    public Page<Category> filterCategory(@Param("parentCategoryId")Integer parentCategoryId, @Param("level")Integer level, Pageable pageable);
 }
