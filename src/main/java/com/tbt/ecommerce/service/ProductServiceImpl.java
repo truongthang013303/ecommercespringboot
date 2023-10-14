@@ -1,5 +1,6 @@
 package com.tbt.ecommerce.service;
 
+import com.tbt.ecommerce.converter.ProductConverter;
 import com.tbt.ecommerce.exception.ProductException;
 import com.tbt.ecommerce.model.Category;
 import com.tbt.ecommerce.model.Product;
@@ -88,9 +89,11 @@ public class ProductServiceImpl implements ProductService{
     @Override
     public Product updateProduct(Long productId, Product req) throws ProductException {
         Product product = findProductById(productId);
-        if(req.getQuantity()!=0){
+        ProductConverter.mergeProduct(req, product);
+/*        if(req.getQuantity()!=0){
             product.setQuantity(req.getQuantity());
         }
+        return productRepository.save(product);*/
         return productRepository.save(product);
     }
 
