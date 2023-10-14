@@ -26,11 +26,11 @@ public class CategoryController {
         return new ResponseEntity<>(categories, HttpStatus.ACCEPTED);
     }
     @GetMapping
-    public ResponseEntity<Page<Category>> findAllByLevelHandle(
+    public ResponseEntity<Page<Category>> filterCategories(
             @RequestParam(required = false) String sort,
             @RequestParam(defaultValue = "0")  Integer pageNumber,
             @RequestParam(defaultValue = "1")  Integer pageSize,
-            @RequestParam(defaultValue = "3") Integer level,
+            @RequestParam(required = false) Integer level,
             @RequestParam(required = false) Integer parentCategoryId
     )
     {

@@ -12,6 +12,8 @@ public interface CategoryRepository extends JpaRepository<Category, Long> {
 
     @Query("SELECT c FROM Category c WHERE c.name=:name AND c.parentCategory.name=:parentCategoryName")
     public Category findByNameAndParent(@Param("name")String name, @Param("parentCategoryName")String parentCategoryName);
+    @Query("SELECT c FROM Category c WHERE c.name=:name AND c.parentCategory.name=:secondLevelCategoryName AND c.parentCategory.parentCategory.name=:topLevelCategoryName")
+    public Category findByNameAndParent(@Param("name")String name, @Param("topLevelCategoryName")String topLevelCategoryName, @Param("secondLevelCategoryName")String secondLevelCategoryName);
 
     public Page<Category> findAllByLevel(Integer level, Pageable pageable);
     @Query("SELECT c FROM Category c WHERE c.parentCategory.id=:parentCategoryId")

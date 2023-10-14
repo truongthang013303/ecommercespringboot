@@ -19,7 +19,7 @@ public class CreateProductRequest {
     private int quantity;
     private String brand;
     private String color;
-    private Set<Size> size = new HashSet<>();
+    private Set<Size> sizes = new HashSet<>();
     private String imageUrl;
     private String topLevelCategory;
     private String secondLevelCategory;
