@@ -8,9 +8,7 @@ import com.tbt.ecommerce.repository.UserRepository;
 import com.tbt.ecommerce.request.LoginRequest;
 import com.tbt.ecommerce.response.AuthResponse;
 import com.tbt.ecommerce.service.CartService;
-import com.tbt.ecommerce.service.CustomeUserServiceImplementation;
-import jdk.jshell.spi.ExecutionControl;
-import org.apache.catalina.authenticator.SpnegoAuthenticator;
+import com.tbt.ecommerce.service.CustomeUserDetailsServiceImplementation;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -32,18 +30,18 @@ public class AuthController {
     private JwtProvider jwtProvider;
 
     private PasswordEncoder passwordEncoder;
-    private CustomeUserServiceImplementation customeUserServiceImplementation;
+    private CustomeUserDetailsServiceImplementation customeUserDetailsServiceImplementation;
 
     private CartService cartService;
 
     public AuthController(UserRepository userRepository,
-                          CustomeUserServiceImplementation customeUserServiceImplementation,
+                          CustomeUserDetailsServiceImplementation customeUserDetailsServiceImplementation,
                           PasswordEncoder passwordEncoder,
                           JwtProvider jwtProvider,
                           CartService cartService
                           ) {
         this.userRepository = userRepository;
-        this.customeUserServiceImplementation = customeUserServiceImplementation;
+        this.customeUserDetailsServiceImplementation = customeUserDetailsServiceImplementation;
         this.passwordEncoder = passwordEncoder;
         this.jwtProvider=jwtProvider;
         this.cartService=cartService;
@@ -97,7 +95,7 @@ public class AuthController {
     }
 
     public Authentication authenticate(String username, String password){
-        UserDetails userDetails = customeUserServiceImplementation.loadUserByUsername(username);
+        UserDetails userDetails = customeUserDetailsServiceImplementation.loadUserByUsername(username);
         if(userDetails==null){
             throw  new BadCredentialsException("Invalid Username");
         }

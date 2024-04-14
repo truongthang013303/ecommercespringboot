@@ -12,10 +12,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class CustomeUserServiceImplementation implements UserDetailsService {
+public class CustomeUserDetailsServiceImplementation implements UserDetailsService {
     private UserRepository userRepository;
 
-    public CustomeUserServiceImplementation(UserRepository userRepository) {
+    public CustomeUserDetailsServiceImplementation(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
