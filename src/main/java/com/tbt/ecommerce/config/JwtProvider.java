@@ -8,14 +8,18 @@ import org.springframework.stereotype.Service;
 
 import javax.crypto.SecretKey;
 import java.util.Date;
+import java.util.stream.Collectors;
 
 @Service
 public class JwtProvider {
     SecretKey key = Keys.hmacShaKeyFor(JwtConstant.SECRET_KEY.getBytes());
     public String generateToken(Authentication auth)
     {
-        String jwt = Jwts.builder().setIssuedAt(new Date()).setExpiration(new Date(new Date().getTime()+846000000))
+        String jwt = Jwts.builder()
+                .setIssuedAt(new Date())
+                .setExpiration(new Date(new Date().getTime()+846000000))
                 .claim("email",auth.getName())
+                .claim("scope",auth.getAuthorities()!=null?auth.getAuthorities().stream().map(simpleGrantedAuthority->simpleGrantedAuthority.getAuthority()).collect(Collectors.joining(" ")):"user")
                 .signWith(key).compact();
 
         return jwt;

@@ -8,6 +8,7 @@ import com.tbt.ecommerce.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -33,7 +34,7 @@ public class AdminProductController {
         response.setStatus(true);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
-
+    @PreAuthorize("hasAuthority('admin')")
     @GetMapping("/all")
     public ResponseEntity<List<Product>> findAllProduct(){
         List<Product> products = productService.findAllProducts();
